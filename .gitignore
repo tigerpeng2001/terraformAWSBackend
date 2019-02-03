@@ -1,0 +1,17 @@
+# vim backup
+*.swp
+
+### Terraform ###
+# Compiled files
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+
+# Module directory
+.terraform/
+
+### Terraform Patch ###
+#*.tfvars
+
+### Terraform out ###
+plan.out
