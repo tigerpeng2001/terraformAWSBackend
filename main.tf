@@ -29,6 +29,10 @@ resource "aws_s3_bucket" "tfstate" {
   acl           = "private"
   force_destroy = "false"
 
+  versioning {
+    enabled = true
+  }
+
   lifecycle_rule {
     enabled = true
 
