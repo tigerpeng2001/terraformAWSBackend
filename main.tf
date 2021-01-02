@@ -1,7 +1,7 @@
 provider "aws" {}
 
 module "data" {
-  source = "data"
+  source = "./data"
 }
 
 resource "aws_dynamodb_table" "dynamodb-terraform-lock" {
@@ -15,13 +15,13 @@ resource "aws_dynamodb_table" "dynamodb-terraform-lock" {
     type = "S"
   }
 
-  tags = "${merge(
+  tags = merge(
     local.common_fix_tags,
     local.common_var_tags,
     map (
     "Name", "Terraform Lock Table"
     )
-  )}"
+  )
 }
 
 resource "aws_s3_bucket" "tfstate" {
@@ -41,13 +41,13 @@ resource "aws_s3_bucket" "tfstate" {
     }
   }
 
-  tags = "${merge(
+  tags = merge(
     local.common_fix_tags,
     local.common_var_tags,
     map (
     "Name", "tfstate bucket"
     )
-  )}"
+  )
 }
 
 output "tfstat_bucket_name" {
