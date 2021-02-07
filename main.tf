@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 variable "region" {
   default = "us-east-1"
 }
@@ -11,6 +12,11 @@ variable "retention-days" {
 provider "aws" {
   region  = var.region
   profile = var.profile
+=======
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+>>>>>>> 0425ba37303f69379a22e29de99f01f8d03e6593
 }
 
 module "data" {
@@ -42,7 +48,7 @@ resource "aws_dynamodb_table" "dynamodb-terraform-lock" {
 }
 
 resource "aws_s3_bucket" "tfstate" {
-  bucket        = "terraform-states-${module.data.account_id}-${module.data.region}"
+  bucket        = "terraform-states-${module.data.account_id}"
   acl           = "private"
   force_destroy = "false"
 
@@ -61,6 +67,7 @@ resource "aws_s3_bucket" "tfstate" {
     }
   }
 
+<<<<<<< HEAD
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -68,6 +75,8 @@ resource "aws_s3_bucket" "tfstate" {
       }
     }
   }
+=======
+>>>>>>> 0425ba37303f69379a22e29de99f01f8d03e6593
   tags = merge(
     local.common_fix_tags,
     local.common_var_tags,
@@ -75,6 +84,7 @@ resource "aws_s3_bucket" "tfstate" {
       "Name", "tfstate bucket"
     )
   )
+<<<<<<< HEAD
 }
 
 resource "aws_s3_bucket_public_access_block" "no-public-access-tfstate" {
@@ -84,7 +94,19 @@ resource "aws_s3_bucket_public_access_block" "no-public-access-tfstate" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+=======
+>>>>>>> 0425ba37303f69379a22e29de99f01f8d03e6593
 }
+
+resource "aws_s3_bucket_public_access_block" "tfstat-no-public-access" {
+  bucket = aws_s3_bucket.tfstate.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  restrict_public_buckets = true
+  ignore_public_acls      = true
+}
+
 
 output "tfstat_bucket_name" {
   value = aws_s3_bucket.tfstate.bucket
