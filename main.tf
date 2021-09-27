@@ -1,8 +1,8 @@
 variable "region" {
-  default = "us-east-1"
+#  default = "us-east-1"
 }
 variable "profile" {
-  default = "default"
+#  default = "default"
 }
 
 variable "retention-days" {
@@ -35,10 +35,9 @@ resource "aws_dynamodb_table" "dynamodb-terraform-lock" {
   tags = merge(
     local.common_fix_tags,
     local.common_var_tags,
-    map(
-      "Name", "Terraform Lock Table"
-    )
+    tomap({ "Name" = "Terraform Lock Table" })
   )
+
 }
 
 resource "aws_s3_bucket" "tfstate" {
@@ -71,9 +70,7 @@ resource "aws_s3_bucket" "tfstate" {
   tags = merge(
     local.common_fix_tags,
     local.common_var_tags,
-    map(
-      "Name", "tfstate bucket"
-    )
+    tomap({ "Name" = "tfstate bucket" })
   )
 }
 
